@@ -1,1 +1,3 @@
-var a = "hello i am jiangjun"
+
+console.log('jj')
+
