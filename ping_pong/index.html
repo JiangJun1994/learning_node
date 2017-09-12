@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src = '/socket.io/socket.io.js'></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+</head>
+<body>
+<button id = 'ping'>send ping to server</button>
+  <script>
+    var socket = io.connect('http://127.0.0.1:3000')
+    var ping = document.getElementById("ping")
+    socket.on('ping',function(data){
+      console.log(data)
+      socket.emit('pong',{text:"pong"})
+    })
+    socket.on('pong',function(data){
+      console.log("receive"+data)
+    })
+    $('ping').click(function(){
+      socket.emit('ping',{text:"ping"})
+    })
+  </script>
+</body>
+</html>

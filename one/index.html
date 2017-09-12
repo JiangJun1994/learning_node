@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src = '/socket.io/socket.io.js'></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+</head>
+<body>
+<h1>socket io</h1>
+<form id="message-form" action="#">
+  <textarea id="message" rows="4" cols="30"></textarea>
+  <input type="submit" value = "send message">
+</form>
+<script>
+  var socket = io.connect('http://127.0.0.1:3000')
+  var message = document.getElementById("message")
+  $(message.form).submit(function(){
+    socket.emit('message',{text:message.value})  //发送消息给服务端
+    return false;
+  });
+  socket.on('broadcast',function(data){
+    $('form').after('<p>'+data.text+'</p>')
+  })
+
+  socket.on('push message',function(data){  //socket.on:接收来自服务端的消息
+    $('form').after('<p>'+data.text+'</p>')
+  })
+//  socket.on('message',function(data){
+//    alert(data.text)
+//  })
+//  socket.on('users',function(data){
+//    console.log(data.number)
+//  })
+</script>
+</body>
+</html>
